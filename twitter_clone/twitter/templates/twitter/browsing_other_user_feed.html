@@ -1,0 +1,25 @@
+{% extends "twitter/index.html" %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-8">
+        <div class="row tweet-feed">
+            
+            {% for tweet in tweets %}
+            <div class="well well-large tweet-container">
+                <div>
+                    <strong>@{{ username }} </strong>
+                    <span class="label label-primary">{{ tweet.date_time }}</span>
+                </div>
+                <div class='tweet-content'>{{ tweet.tweet }}</div>
+            </div>
+            {% endfor %}
+            
+        </div>
+    </div>
+    <div class="col-sm-2"></div>
+</div>
+
+{% endblock %}
