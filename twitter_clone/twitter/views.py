@@ -2,7 +2,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
 from django.core.exceptions import ObjectDoesNotExist
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 
 from .forms import RegisterForm, LoginForm, TweetForm
@@ -31,25 +31,28 @@ def index(request):
 	
 	# if not request.user.is_authenticated():
 	# 	return HttpResponseRedirect(reverse('user_login'))
+	
+	if request.user.is_authenticated:
+		pass
+	
+	else:
+		pass
 
 	return render(request, 'twitter/index.html')
 
 
-def user-login(request):
-    '''
-    Will log a user in with cookies / CSRF junk, check user.is_authenticated.
-    Note as well the tests use an imported method called "get_user_model()"
-    '''
+def userlogin(request):
     form = LoginForm()
 
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(username=username, password=password)
-        if user:
+        if user is not None:
             if user.is_active:
                 login(request, user)
-                return HttpResponseRedirect(reverse('username-hp'))
+                return HttpResponseRedirect(reverse('tweets', kwargs={'username':username}))
+                # return HttpResponseRedirect(reverse('username', args=[request.user.username]))
             else:
                 return HttpResponse(
                     "You Twitter_Clone account has disabled due to lame Tweets, sorry not sorry...")
@@ -62,8 +65,9 @@ def user-login(request):
         return render(request, 'twitter/login.html')
         
 
-def user_logout(request):
-	pass
+def userlogout(request):
+    logout(request)
+    return HttpResponse("Logged out")
 
 '''
 def register(request):
@@ -94,7 +98,7 @@ def register(request):
 	return render(request, 'twitter/register.html', {'user_form': user_form, 'profile_form': profile_form, 'registered': registered})
 '''
 	
-def username(request, username):
+def tweets(request, username):
 	'''
 	If user has full URL, even if not authenticated, 
 	show the tweet feed for that username.
@@ -104,7 +108,7 @@ def username(request, username):
 	try:
 		user_id = User.objects.get(username = username).id
 	except User.DoesNotExist:
-		message = messages.error(request, 'does not exist')
+		messages.error(request, 'does not exist')
 		context = {'username':username, 'message': messages}
 		
 		return render(request, 'twitter/feed.html', context)
@@ -113,7 +117,7 @@ def username(request, username):
 	tweets = Tweet.objects.filter(user = user_id)
 	
 	if not tweets:
-		message = messages.info(request, 'hasn\'t tweeted yet :(')
+		messages.info(request, 'hasn\'t tweeted yet :(')
 		context = {'username':username, 'message': messages}
 		
 		return render(request, 'twitter/feed.html', context)

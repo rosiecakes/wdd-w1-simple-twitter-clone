@@ -5,9 +5,9 @@ from twitter import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^user_login$', views.user-login, name='login'),
+    url(r'^login$', views.userlogin, name='login'),
+    url(r'^logout$', views.userlogout, name='logout'),
     url(r'^$', views.index, name='index'),
-    url(r'^(?P<username>\w+)$', views.username, name='username-hp'),
-    # url(r'^register/', views.register, name='register'), # don't think we need this
+    url(r'^(?P<username>\w+)$', views.tweets, name='tweets'),
 ]
 

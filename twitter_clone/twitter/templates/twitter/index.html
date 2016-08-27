@@ -26,11 +26,11 @@
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
                         {% if not user.is_authenticated %}
-                        <li><a href="/user_login"><i class="fa fa-sign-in" aria-hidden="true"></i> Log in</a></li>
+                        <li><a href="/login"><i class="fa fa-sign-in" aria-hidden="true"></i> Log in</a></li>
                         {% endif %}
                         
                         {% if user.is_authenticated %}
-                        <li><a href="/user_logout"><i class="fa fa-sign-out" aria-hidden="true"></i> Log out</a></li>
+                        <li><a href="/logout"><i class="fa fa-sign-out" aria-hidden="true"></i> Log out</a></li>
                         {% endif %}
                     </ul>
                 </div>
