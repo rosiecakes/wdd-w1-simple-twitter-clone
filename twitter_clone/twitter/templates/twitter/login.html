@@ -5,10 +5,7 @@
 <div class="row">
     <div class="col-md-12">
         <form role="form" action="" method="POST">
-            
-            <!-- this form needs work -->
-            
-            <input type='hidden' name='csrfmiddlewaretoken' value='PB1MS641epIjg7rad1X2YlsqjDSBySTP' />
+            {% csrf_token %}
             <div class="form-group">
                 <label for="username">Username</label>
                 <input class="form-control" name="username" placeholder="Your username" value="">
