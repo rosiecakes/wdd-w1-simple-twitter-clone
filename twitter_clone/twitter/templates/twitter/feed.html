@@ -7,12 +7,12 @@
     <div class="col-sm-8">
         <div class="row tweet-feed">
             
-            {% if user.is_authenticated %}
+            {% if user.is_authenticated and user.username == username %}
             <div class="row">
-                <form role="form" action="" method="POST">
+                <form role="form" action="/" method="POST">
                     {% csrf_token %}
                     <div class="form-group ">
-                        <textarea class="form-control" name="tweet" placeholder="Write your tweet here..." required></textarea>
+                        <textarea class="form-control" name="tweet" placeholder="Write your tweet here..." required maxlength="140"></textarea>
                     </div>
                     <button type="submit" class="btn btn-info pull-right">Submit</button>
                 </form>
@@ -23,6 +23,12 @@
             {% for tweet in tweets %}
             <div class="well well-large tweet-container">
                 <div>
+                    {% if user.is_authenticated %}
+                    <form action="delete" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="close" title="Delete this tweet"><span aria-hidden="true">&times;</span></button>
+                    </form>
+                    {% endif %}
                     <strong>@{{ username }}</strong>
                     <span class="label label-primary">{{ tweet.date_time }}</span>
                 </div>
@@ -34,7 +40,7 @@
             {% if not tweets %}
             {% if messages %}
                 {% for message in messages %}
-                    <div class="alert alert-warning" role="alert"><strong>{{ username }}</strong> {{ message }}</div>
+                    <div class="alert alert-{{ message.tags }}" role="alert"><strong>{{ username }}</strong> {{ message }}</div>
                 {% endfor %}
             {% endif %}
             {% endif %}
