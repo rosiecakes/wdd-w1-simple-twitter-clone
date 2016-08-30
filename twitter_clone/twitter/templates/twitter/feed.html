@@ -24,7 +24,7 @@
             <div class="well well-large tweet-container">
                 <div>
                     {% if user.is_authenticated %}
-                    <form action="delete" method="POST">
+                    <form action="{{ tweet.id }}/delete" method="POST">
                     {% csrf_token %}
                     <button type="submit" class="close" title="Delete this tweet"><span aria-hidden="true">&times;</span></button>
                     </form>

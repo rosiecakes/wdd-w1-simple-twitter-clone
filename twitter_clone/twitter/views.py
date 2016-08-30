@@ -77,6 +77,12 @@ def tweets(request, username=None):
 def userlogout(request):
     logout(request)
     messages.success(request, 'You have been logged out.')
-    
     return render(request, 'twitter/feed.html')
 
+
+def delete_tweet(request, tweet_id):
+    if request.method == "POST":
+        username = request.user.username
+        tweet = Tweet.objects.get(id=tweet_id)
+        tweet.delete()
+        return HttpResponseRedirect(reverse('tweets', kwargs={'username':username}))

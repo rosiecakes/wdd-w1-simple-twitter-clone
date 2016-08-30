@@ -9,5 +9,6 @@ urlpatterns = [
     url(r'^login$', views.userlogin, name='login'),
     url(r'^logout$', views.userlogout, name='logout'),
     url(r'^(?P<username>\w+)$', views.tweets, name='tweets'),
+    url(r'^(?P<tweet_id>\d+)/delete$', views.delete_tweet, name='delete_tweet')
 ]
 
